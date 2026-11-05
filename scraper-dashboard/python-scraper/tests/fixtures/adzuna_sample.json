@@ -1,0 +1,158 @@
+{
+    "results": [
+        {
+            "longitude": -38.49093,
+            "redirect_url": "https://www.adzuna.com.br/details/5904355809?utm_medium=api&utm_source=74aa1432",
+            "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiV0dXYS1weTk4Ukd3RW80N21xVk1WdyIsImkiOiI1OTA0MzU1ODA5In0.zFmmY0mh5DmuZrEka_kjzqpg3z9eh6RRxoFWlOsJ3vE",
+            "salary_is_predicted": "0",
+            "id": "5904355809",
+            "__CLASS__": "Adzuna::API::Response::Job",
+            "latitude": -4.09752,
+            "created": "2026-09-30T21:24:33Z",
+            "category": {
+                "tag": "other-general-jobs",
+                "label": "Outras vagas",
+                "__CLASS__": "Adzuna::API::Response::Category"
+            },
+            "location": {
+                "area": [
+                    "Brasil",
+                    "Nordeste",
+                    "Ceará",
+                    "Horizonte"
+                ],
+                "display_name": "Horizonte, Ceará",
+                "__CLASS__": "Adzuna::API::Response::Location"
+            },
+            "description": "Desenvolvedor Para Ios - ?? Techs e conhecimentos desejados:SwiftUI, UIKit, RxSwift e CombineTestes UI e SnapshotIntegração com APIs (desejável experiência com BFF)Familiaridade com SDUI e ViewSystem? Diferenciais que somam:Experiência com Kotlin Multiplatform (KMP)Conhecimento em arquitetura BFF (Backends for Frontends)Experiência com outras stacks de desenvolvimento",
+            "title": "Desenvolvedor Para Ios",
+            "company": {
+                "__CLASS__": "Adzuna::API::Response::Company"
+            }
+        },
+        {
+            "longitude": -38.49093,
+            "redirect_url": "https://www.adzuna.com.br/details/5904355826?utm_medium=api&utm_source=74aa1432",
+            "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiV0dXYS1weTk4Ukd3RW80N21xVk1WdyIsImkiOiI1OTA0MzU1ODI2In0.kqRA_iH1a65iFHQqV3P4KPMnsf5DtzCKlvaC6yNeUBg",
+            "salary_is_predicted": "0",
+            "id": "5904355826",
+            "__CLASS__": "Adzuna::API::Response::Job",
+            "latitude": -4.09752,
+            "created": "2026-09-30T21:24:33Z",
+            "location": {
+                "__CLASS__": "Adzuna::API::Response::Location",
+                "area": [
+                    "Brasil",
+                    "Nordeste",
+                    "Ceará",
+                    "Horizonte"
+                ],
+                "display_name": "Horizonte, Ceará"
+            },
+            "category": {
+                "__CLASS__": "Adzuna::API::Response::Category",
+                "label": "Outras vagas",
+                "tag": "other-general-jobs"
+            },
+            "title": "Desenvolvedor Java",
+            "description": "Desenvolvedor Java - Stack principal:? Java  Spring Boot / Micronaut? APIs RESTful (API First com Swagger/OpenAPI)? PostgreSQL, SQL Server, MongoDB, DynamoDB? AWS (EC2, S3, EKS, SQS, etc. )? Kubernetes, Git, CI/CD?? Ambiente colaborativo, com foco em qualidade e inovação contínua!?? Interessou? Envie seu CV e LinkedIn e se candidate na vaga!Ou marque alguém para se inscrever que não pode perder essa oportunidade! ??hashtagVagaTI hashtagBackendJava hashtagSpringBoot hashtagMicrosserviços hashtag…",
+            "company": {
+                "__CLASS__": "Adzuna::API::Response::Company"
+            }
+        },
+        {
+            "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiV0dXYS1weTk4Ukd3RW80N21xVk1WdyIsImkiOiI1OTA0MzUzOTQ4In0.6-8mJDXyYJSTNHNm-ZuIEShsPcbu09e0hHrIhO6czCA",
+            "salary_is_predicted": "0",
+            "redirect_url": "https://www.adzuna.com.br/details/5904353948?utm_medium=api&utm_source=74aa1432",
+            "longitude": -38.49093,
+            "title": "Desenvolvedor Para Android",
+            "description": "Desenvolvedor Para Android - Que tal batermos um papo para eu te contar mais detalhes sobre a vaga??? Requisitos técnicos (Hard Skills):Android: Kotlin, Jetpack Compose (desejável Kotlin Multiplatform – KMP)Backend: Experiência com APIs (desejável conhecimento em arquitetura BFF)Frameworks e Bibliotecas: Koin (conhecimento em Dagger 2 é um diferencial)Outros: Familiaridade com SDUI e ViewSystem?? Diferenciais:Experiência com desenvolvimento em outras tecnologiasConhecimento em Kotlin Multiplatf…",
+            "company": {
+                "__CLASS__": "Adzuna::API::Response::Company"
+            },
+            "created": "2026-09-30T21:24:15Z",
+            "latitude": -4.09752,
+            "category": {
+                "label": "Outras vagas",
+                "__CLASS__": "Adzuna::API::Response::Category",
+                "tag": "other-general-jobs"
+            },
+            "location": {
+                "__CLASS__": "Adzuna::API::Response::Location",
+                "display_name": "Horizonte, Ceará",
+                "area": [
+                    "Brasil",
+                    "Nordeste",
+                    "Ceará",
+                    "Horizonte"
+                ]
+            },
+            "id": "5904353948",
+            "__CLASS__": "Adzuna::API::Response::Job"
+        },
+        {
+            "description": "FORMAÇÃO : Nível superior em andamento em Computação, Informática, Análise de Sistemas ou correlatos. REQUISITOS NECESSÁRIOS : Conhecimentos Específicos Obrigatórios Desenvolvimento WEB utilizando: Angular; ASP.NET; .NET Framework; Banco de Dados SQL Server; Entity Framework. BENEFÍCIOS E VANTAGENS : VR ou VA (você escolhe!); Plano de saúde e odontológico (por adesão); Auxílio creche para filhos com até 3 anos de idade (mães); Incentivo à certificação dos nossos colaboradores; Nosso programa de…",
+            "title": "DESENVOLVEDOR(A) .NET",
+            "company": {
+                "__CLASS__": "Adzuna::API::Response::Company",
+                "display_name": "AjaxTI"
+            },
+            "id": "5516763991",
+            "__CLASS__": "Adzuna::API::Response::Job",
+            "created": "2025-11-27T16:39:28Z",
+            "category": {
+                "tag": "admin-jobs",
+                "label": "Vagas em Administrativo e Operacional",
+                "__CLASS__": "Adzuna::API::Response::Category"
+            },
+            "location": {
+                "area": [
+                    "Brasil",
+                    "Nordeste",
+                    "Ceará",
+                    "Fortaleza"
+                ],
+                "display_name": "Fortaleza, Ceará",
+                "__CLASS__": "Adzuna::API::Response::Location"
+            },
+            "adref": "eyJhbGciOiJIUzI1NiJ9.eyJpIjoiNTUxNjc2Mzk5MSIsInMiOiJXR1dhLXB5OThSR3dFbzQ3bXFWTVZ3In0.E4OSu3X8uq-RtuaMqdrZIUHLPZ0JPRLQYXc__h57R6Q",
+            "salary_is_predicted": "0",
+            "redirect_url": "https://www.adzuna.com.br/details/5516763991?utm_medium=api&utm_source=74aa1432"
+        },
+        {
+            "salary_is_predicted": "0",
+            "adref": "eyJhbGciOiJIUzI1NiJ9.eyJzIjoiV0dXYS1weTk4Ukd3RW80N21xVk1WdyIsImkiOiI1NzAyOTUzMTA4In0.hyaKlQt5r5rpWkK4D7_kH4FMbnXFFbRa6W0J1nC_uEs",
+            "redirect_url": "https://www.adzuna.com.br/details/5702953108?utm_medium=api&utm_source=74aa1432",
+            "longitude": -38.54339,
+            "company": {
+                "display_name": "Life Dh Psicologia",
+                "__CLASS__": "Adzuna::API::Response::Company"
+            },
+            "description": "Estamos contratando! A Mitri Web é uma startup do Grupo Martins e Lemos , especializada em transformar dados empresariais em insights inteligentes para apoiar decisões estratégicas. Com nossas soluções: MitriFolha e MitriFiscal SRT, ajudamos empresas a reduzir a carga tributária por meio de tecnologia, automação e análise de dados. Estamos em busca de uma pessoa Desenvolvedora Python apaixonada por tecnologia, inovação e eficiência , que queira crescer junto com uma empresa em expansão no setor…",
+            "title": "Desenvolvedor Python",
+            "__CLASS__": "Adzuna::API::Response::Job",
+            "id": "5702953108",
+            "category": {
+                "label": "Unknown",
+                "__CLASS__": "Adzuna::API::Response::Category",
+                "tag": "unknown"
+            },
+            "location": {
+                "display_name": "Jangurussu, Fortaleza",
+                "area": [
+                    "Brasil",
+                    "Nordeste",
+                    "Ceará",
+                    "Fortaleza",
+                    "Jangurussu"
+                ],
+                "__CLASS__": "Adzuna::API::Response::Location"
+            },
+            "latitude": -3.71839,
+            "created": "2026-04-17T17:51:33Z"
+        }
+    ],
+    "__CLASS__": "Adzuna::API::Response::JobSearchResults",
+    "count": 59,
+    "mean": 67933.78
+}
