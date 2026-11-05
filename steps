@@ -1,0 +1,772 @@
+Checklist — Scraper de vagas
+Etapa 0 — Preparar os conhecimentos necessários
+ Entender variáveis e tipos de dados em Python
+ Praticar if, elif e else
+ Praticar for e while
+ Entender listas e dicionários
+ Criar e utilizar funções
+ Trabalhar com strings
+ Entender módulos e import
+ Aprender tratamento de erros com try e except
+ Aprender leitura e escrita de arquivos JSON
+ Entender classes e objetos no nível básico
+ Entender requisições HTTP
+ Conhecer HTML básico
+ Conhecer seletores CSS
+
+Concluído quando: você conseguir criar uma lista de dicionários e salvá-la em um arquivo JSON.
+
+Etapa 1 — Criar o projeto do scraper
+
+Estrutura inicial:
+
+job-scraper/
+├── scraper/
+│   ├── sources/
+│   ├── discovery/
+│   ├── fetching/
+│   ├── parsing/
+│   ├── normalization/
+│   ├── validation/
+│   └── deduplication/
+├── data/
+│   ├── raw/
+│   └── processed/
+├── tests/
+├── main.py
+├── requirements.txt
+├── .gitignore
+└── README.md
+
+Checklist:
+
+ Criar a pasta job-scraper
+ Abrir a pasta no VS Code
+ Criar um ambiente virtual
+ Ativar o ambiente virtual
+ Criar requirements.txt
+ Criar main.py
+ Criar as pastas da estrutura
+ Criar .gitignore
+ Ignorar .venv, __pycache__ e arquivos temporários
+ Criar o primeiro repositório Git
+ Fazer o primeiro commit
+
+Instalações iniciais:
+
+pip install httpx beautifulsoup4 pydantic
+
+Concluído quando: python main.py executar sem erros.
+
+✅
+
+Etapa 2 — Definir o formato padrão de uma vaga
+
+Cada vaga coletada deverá seguir aproximadamente este formato:
+
+{
+    "source": "",
+    "source_url": "",
+    "external_id": None,
+    "title": "",
+    "company": "",
+    "description": "",
+    "location": "",
+    "work_mode": None,
+    "seniority": None,
+    "employment_type": None,
+    "technologies": [],
+    "published_at": None,
+    "fetched_at": "",
+    "content_hash": ""
+}
+
+Checklist:
+
+ Criar o modelo RawJob
+ Criar o modelo NormalizedJob
+ Definir campos obrigatórios
+ Definir campos opcionais
+ Definir valores possíveis para modalidade
+ Definir valores possíveis para senioridade
+ Definir valores possíveis para tipo de contrato
+ Criar um exemplo manual de vaga
+ Validar o exemplo usando Pydantic
+
+Concluído quando: uma vaga válida for aceita pelo modelo e uma vaga sem título gerar erro.
+
+Etapa 2: 9/9 completed ✅
+
+Etapa 3 — Escolher a primeira fonte
+
+Comece com uma fonte pública e simples.
+
+ Escolher uma página pública de vagas
+ Verificar se existe API pública
+ Verificar se existe RSS
+ Verificar se existe sitemap
+ Verificar se existem dados JSON-LD
+ Verificar o robots.txt
+ Consultar os termos de uso
+ Confirmar que a página não exige login
+ Confirmar que não existe CAPTCHA
+ Registrar o nome da fonte
+ Registrar a URL principal
+ Registrar o método de coleta escolhido
+ Definir um limite de requisições
+
+Ordem de preferência:
+
+API pública
+RSS ou sitemap
+JSON-LD
+HTML estático
+Playwright, somente se necessário
+
+Concluído quando: você tiver uma fonte aprovada e souber de onde as URLs das vagas serão obtidas.
+
+Etapa 3: completed ✅
+
+
+Etapa 4 — Fazer a primeira requisição HTTP
+
+Antes de extrair vagas, aprenda a baixar uma página.
+
+ Criar fetching/http_client.py
+ Importar httpx
+ Fazer uma requisição GET
+ Mostrar o status HTTP
+ Mostrar o tamanho da resposta
+ Verificar o Content-Type
+ Configurar timeout
+ Definir um User-Agent
+ Tratar erro de conexão
+ Tratar resposta diferente de 200
+ Salvar o HTML recebido em data/raw
+
+Exemplo de primeiro resultado:
+
+Status: 200
+Content-Type: text/html
+Página salva com sucesso.
+
+Concluído quando: o HTML da página puder ser salvo localmente.
+
+For Step 4, you have only prepared part of it so far. You created/planned fetching/http_client.py, installed or prepared to use httpx, and studied things like try/except, imports, modules, HTTP concepts, and file handling. But according to the checklist, Step 4 is only complete when you actually make the GET request, inspect the status/content type/response size, add timeout and User-Agent, handle failures, and save the response locally.
+
+done
+
+Etapa 5 — Descobrir as URLs das vagas
+
+Agora o scraper deve encontrar os links individuais.
+
+ Criar discovery/job_links.py
+ Abrir o HTML com BeautifulSoup
+ Identificar o elemento que representa uma vaga
+ Criar o seletor CSS dos links
+ Extrair todos os links encontrados
+ Converter links relativos em URLs completas
+ Remover links vazios
+ Remover links duplicados
+ Aceitar somente URLs do domínio permitido
+ Salvar as URLs encontradas
+ Mostrar a quantidade no terminal
+
+Para anotar nas suas tasks de hoje, no scraper:
+
+✅ Escolhi a API oficial da Adzuna como primeira fonte de vagas e criei a conta e a chave de acesso.
+✅ Testei http_client.py: a requisição retornou status 200 e salvou o HTML em data/raw/response.html. Isso concluiu o teste inicial de HTTP da Etapa 4.
+✅ Preparei o uso de ADZUNA_APP_ID e ADZUNA_APP_KEY no .env e ajustei o .gitignore para não enviar credenciais ao Git.
+✅ Separei as aulas do curso necessárias para construir a integração por partes.
+
+Próxima task: implementar scraper/fetching/adzuna_client.py, testar a busca de vagas e salvar a resposta em JSON. Na última imagem, esse arquivo ainda está vazio; então a coleta da Adzuna ainda não foi concluída.
+
+Resultado esperado:
+
+Fonte: Empresa X
+URLs encontradas: 25
+URLs únicas: 22
+
+Concluído quando: o scraper retornar uma lista de URLs únicas de vagas.
+
+Today — Step 5, Adzuna integration
+- ✅ 5.1–5.2: Imported the modules and found the python-scraper project root.
+- ✅ 5.3–5.5: Loaded .env from the dashboard root, read the Adzuna credentials, and added checks for missing credentials.
+- ✅ 5.6–5.8: Built a search for five developer jobs in Ceará, sent the GET request, and confirmed a successful HTTP response.
+- ✅ 5.9–5.10: Converted the response to JSON, accessed data["results"], and confirmed that five jobs were returned.
+- ✅  5.11: Save the raw response to data/raw/adzuna_jobs.json.
+- ✅  5.12: Run the script again and check that the JSON file was created correctly.
+Current progress: 5.1–5.10 complete; 5.11 is next. Your original Step 5 checklist describes finding links in HTML. Since you chose Adzuna’s API, these 5.x substeps are the API version of that work.
+
+
+5 is done 
+
+
+Etapa 6 — Criar o adaptador da fonte
+
+Cada site deverá ter seu próprio adaptador.
+
+You completed:
+- ✅ Created scraper/sources/base.py.
+- ✅ Defined JobSourceAdapter with all five method placeholders and clear NotImplementedError messages.
+- ✅ Created scraper/sources/adzuna.py.
+- ✅ Defined AdzunaAdapter, inheriting from JobSourceAdapter.
+- ✅ Implemented source_external_id() to extract a job’s ID and return it as a string.
+- ✅ Fixed the import error by running the module from python-scraper:python -m scraper.sources.adzuna
+- ✅ Ran the sample successfully—the terminal printed 123.
+
+ Criar sources/base.py
+ Definir a classe-base JobSourceAdapter
+ Criar o método discover()
+ Criar o método fetch()
+ Criar o método parse()
+ Criar o método canonicalize_url()
+ Criar o método source_external_id()
+ Criar o adaptador da primeira fonte
+ Colocar os seletores da fonte somente nesse arquivo
+ Testar o adaptador isoladamente
+
+Estrutura esperada:
+
+class JobSourceAdapter:
+    def discover(self):
+        pass
+
+    def fetch(self, url):
+        pass
+
+    def parse(self, html):
+        pass
+
+Concluído quando: o adaptador descobrir, baixar e interpretar pelo menos uma vaga.
+
+Etapa 7 — Extrair os dados da vaga
+ Extrair o título
+ Extrair o nome da empresa
+ Extrair a descrição
+ Extrair a localização
+ Extrair a modalidade, se estiver disponível
+ Extrair o tipo de contrato
+ Extrair a senioridade
+ Extrair a data de publicação
+ Extrair requisitos
+ Extrair tecnologias
+ Extrair o identificador externo
+ Manter a URL original
+ Registrar a data e hora da coleta
+ Tratar campos que não existirem
+ Não inventar informações ausentes
+
+ rite down only what you've actually run and seen work.
+
+Today, Step 6, Adzuna adapter
+
+✅ Implemented discover(): it calls the Adzuna API and returns the results list.
+✅ Implemented fetch(): it returns the item as-is, because the API already includes the job details.
+✅ Implemented parse(): it maps an Adzuna job to a RawJob.
+✅ Implemented canonicalize_url(): it strips the query string (fixed the HttpUrl error with str(url)).
+✅ Tested the adapter on its own with python -m scraper.sources.adzuna. It printed a real job title and the clean URL adzuna.com.br/details/5913094087.
+✅ Updated models/job.py with published_at, fetched_at and extra="forbid".
+✅ Committed the adapter, moved the raw JSON to tests/fixtures/adzuna_sample.json, and untracked data/raw.
+
+Step 6 is done. The "Concluído quando" criterion is met: the adapter discovered, fetched and parsed a real job.
+
+Step 7: don't mark it done yet. Write it as partial:
+
+✅ Extracted title, company, description, location, external ID, original URL and fetched_at.
+⏳ Still open: published_at and employment_type haven't been checked in the output, and the empty company hasn't been checked across all five jobs.
+
+Your last run still printed the old single-job output, so the five-job loop hasn't run yet. Once you run python -m scraper.sources.adzuna and see five lines with dates and employment types, add:
+
+✅ Step 7: parsed the 5 jobs into RawJob with dates and employment type, and left missing fields empty.
+
+Concluído quando: uma página for transformada em um dicionário Python com os dados da vaga.
+
+Etapa 8 — Normalizar os dados
+ Criar normalization/job_normalizer.py
+ Remover espaços duplicados
+ Remover quebras de linha desnecessárias
+ Limpar o título
+ Limpar o nome da empresa
+ Remover HTML da descrição
+ Preservar parágrafos úteis
+ Padronizar modalidade para remote, hybrid ou onsite
+ Padronizar senioridade
+ Padronizar tipo de contrato
+ Separar cidade e estado quando possível
+ Padronizar datas
+ Padronizar nomes de tecnologias
+ Manter os dados originais para auditoria
+
+Exemplo:
+
+"Trabalho Remoto" → "remote"
+"Desenvolvedor Júnior" → "junior"
+"Node JS" → "Node.js"
+
+Concluído quando: vagas escritas de formas diferentes produzirem valores padronizados.
+
+All 6 tests pass: collected 6 items, 6 passed in 0.19s. Your test file looks right. Each function checks one topic, the imports are at the top, and the tests sit in the right file.
+
+What you can write in your Step 8 notes:
+
+Created normalization/job_normalizer.py
+clean_text removes duplicate spaces and line breaks (tested)
+normalize_employment_type converts text to the enum, and unknown values give None (tested)
+normalize_seniority detects junior, mid-level and senior, and returns None for unknown or missing titles (tested)
+6 pytest tests passing
+
+You’re at 7 of 14 on Step 8 (50%), with 8 tests passing and everything committed.
+
+Done (7):
+
+✅ Create normalization/job_normalizer.py
+✅ Remove duplicate spaces (clean_text)
+✅ Remove unnecessary line breaks (clean_text)
+✅ Clean the title (clean_title)
+✅ Clean the company name (clean_company)
+✅ Standardize seniority (normalize_seniority)
+✅ Standardize contract type (normalize_employment_type)
+
+
+Three updates, using only what you’ve actually run and seen pass today.
+
+1. Line 281 (Step 7). Replace the old line, which claimed employment type, with:
+
+✅ Step 7: parsed the 5 jobs into RawJob with title, company, location, external ID, original URL, published_at and fetched_at. employment_type stays None because Adzuna doesn’t return it for these results. Missing fields are left empty.
+
+2. Lines 309-329 (Step 8 notes). Replace the “6 tests / 7 of 14” block with:
+
+All 21 tests pass (pytest, tests/test_normalizer.py). You’re at 10 of 14 on Step 8, everything committed.
+
+Done (10):
+
+✅ Create normalization/job_normalizer.py
+✅ Remove duplicate spaces (clean_text)
+✅ Remove unnecessary line breaks (clean_text)
+✅ Clean the title (clean_title)
+✅ Clean the company name (clean_company)
+✅ Remove HTML from the description (clean_description)
+✅ Preserve useful paragraphs (clean_description keeps paragraphs, line breaks and list bullets)
+✅ Standardize work mode (normalize_work_mode: remote, hybrid, onsite, else None)
+✅ Standardize seniority (normalize_seniority)
+✅ Standardize contract type (normalize_employment_type)
+
+Still open (4): split city and state, standardize dates, standardize technology names, keep original data for audit.
+
+Note: clean_description and clean_company are tested but not wired into the live adapter output yet.
+
+All 29 tests pass (pytest). You're at 13 of 14 on Step 8, everything committed.
+
+Done (13):
+✅ Create normalization/job_normalizer.py
+✅ Remove duplicate spaces (clean_text)
+✅ Remove unnecessary line breaks (clean_text)
+✅ Clean the title (clean_title)
+✅ Clean the company name (clean_company)
+✅ Remove HTML from the description (clean_description)
+✅ Preserve useful paragraphs (clean_description)
+✅ Standardize work mode (normalize_work_mode)
+✅ Standardize seniority (normalize_seniority)
+✅ Standardize contract type (normalize_employment_type)
+✅ Split city and state (split_location, from Adzuna's location.area)
+✅ Standardize dates (normalize_date, always UTC)
+✅ Keep original data for audit (raw field in NormalizedJob)
+
+✅ normalize_job runs on the 5 live Adzuna jobs: city/state, UTC dates,
+   empty company -> None, Pleno -> mid_level, Estagiário -> intern, Remoto -> remote.
+
+Still open (1): standardize technology names.
+
+
+
+
+3. A short housekeeping line under today’s notes:
+
+✅ Fixed the venv: installed beautifulsoup4 and pytest, added pytest to requirements.txt, removed the stray unicorn line. The Adzuna adapter still returns 5 jobs.
+
+Leave Step 8 unfinished and don’t touch Step 9, since neither is done.
+
+One thing the notes shouldn’t claim yet: that descriptions are clean in the real output. The functions pass their tests, but nothing calls them on the five Adzuna jobs until you wire normalization into the pipeline. The “Concluído quando” criterion for Step 8 (“different spellings produce standard values”) also isn’t met until the four remaining items are in.
+
+Sim, no código a Etapa 8 está completa (14/14)
+
+done
+
+Etapa 9 — Validar a qualidade das vagas
+
+Pelo que você me mostrou hoje (o código colado e as screenshots), isto foi o que você fez da Etapa 9.
+
+Feito hoje
+
+✅ Criou scraper/validation/job_validator.py. O arquivo ainda está como U (não commitado).
+✅ Escreveu validate_job(), que devolve uma lista de motivos de rejeição (lista vazia = vaga válida). O código já cobre:
+
+título ausente → missing_title
+empresa ausente → missing_company
+descrição ausente → missing_description
+descrição curta (menos de 50 caracteres) → description_too_short
+URL ausente → missing_url
+formato de URL inválido (sem http/https ou sem domínio) → invalid_url
+domínio fora da allowlist por fonte (ALLOWED_DOMAINS, com Adzuna → adzuna.com.br) → domain_not_allowed
+data de publicação no futuro (tolerância de 1 dia) → published_in_future
+
+✅ Escreveu split_valid_invalid(), que separa vagas válidas e inválidas e guarda os motivos de cada inválida.
+✅ Testou no terminal como o urlsplit lê um link relativo: /details/123 deu '' None (sem scheme e sem domínio). Isso confirma que esse tipo de link cai em invalid_url.
+
+Ainda não confirmado
+
+⏳ Correção da allowlist (source_not_allowed para fonte desconhecida): expliquei onde colocar, mas não vi o código depois da mudança.
+⏳ Páginas de busca, de login e que não são vaga: ainda não vi esses checks no código.
+⏳ Apagar o ValidationResult e o import do dataclasses.
+⏳ tests/test_validator.py: nenhum teste do validador foi escrito ou rodado ainda.
+⏳ Rodar nas 5 vagas reais da Adzuna: ainda não rodou.
+⏳ Commit: ainda não feito.
+
+Para suas notas
+
+Pela regra que você vem usando (só marcar o que rodou e viu funcionar), eu anotaria assim:
+
+Etapa 9 (em andamento): criei job_validator.py com validate_job() (título, empresa, descrição, tamanho mínimo, formato da URL, domínio permitido e data no futuro) e split_valid_invalid() (separa válidas e inválidas com os motivos). Código escrito, ainda sem testes e sem commit. Faltam: busca, login, página que não é vaga, testes, rodar nas 5 vagas reais e commit.
+
+No código você está em cerca de 11 de 14, mas nenhum item está comprovado até o pytest passar.
+
+ Criar validation/job_validator.py
+ Verificar se existe título
+ Verificar se existe empresa
+ Verificar se existe descrição
+ Verificar se existe URL original
+ Validar o formato da URL
+ Verificar se a URL pertence ao domínio permitido
+ Verificar tamanho mínimo da descrição
+ Validar a data de publicação
+ Rejeitar páginas de busca
+ Rejeitar páginas de login
+ Rejeitar páginas que não representam uma vaga
+ Registrar os motivos da rejeição
+ Separar vagas válidas e inválidas
+
+Concluído quando: nenhuma vaga sem título, empresa, descrição ou URL válida for aprovada.
+
+Step 9 (done): created scraper/validation/job_validator.py.
+✅ validate_job() returns the rejection reasons (empty list = valid):
+   missing title/company/description, short description, missing/invalid URL,
+   unknown source, domain outside the allowlist, login/search/non-job pages,
+   generic title, publication date in the future (1 day of tolerance)
+✅ split_valid_invalid() separates valid and invalid jobs, keeping the reasons
+✅ tests/test_validator.py: 18 tests, 54 passing in total (pytest)
+✅ Ran on the 5 live Adzuna jobs: 5 valid, 0 invalid
+✅ Committed
+
+
+Step 4 passed ✅. Step 9 is now verified at 100%, 14 of 14.
+
+Commit 86ce3bb feat(validation): add job validator with rejection reasons and tests is your latest commit (HEAD -> master).
+All three files are tracked, and the working tree is clean.
+The second git add / git commit you ran did nothing (“nothing to commit”), because everything was already committed. That’s harmless.
+
+
+Step 9 (done, verified 25/10): scraper/validation/job_validator.py
+✅ validate_job(): missing title/company/description/URL, short description,
+   invalid URL, unknown source, domain outside allowlist, login/search/non-job
+   pages, generic title, future publication date (1 day tolerance)
+✅ split_valid_invalid() separates valid and invalid with reasons
+✅ tests/test_validator.py: 18 passed; full suite 54 passed
+✅ 5 live Adzuna jobs: 5 valid, 0 invalid
+✅ Committed: 86ce3bb
+Note: venv is at Scraper/venv → source ../../venv/Scripts/activate
+
+Etapa 10 — Remover duplicidades
+ Criar deduplication/deduplicator.py
+ Remover parâmetros de rastreamento das URLs
+ Criar a URL canônica
+ Comparar o identificador externo
+ Comparar a URL canônica
+ Criar uma chave com empresa, título e localização
+ Normalizar os valores antes da comparação
+ Criar um hash do conteúdo
+ Comparar o hash das descrições
+ Não adicionar uma vaga já existente
+ Atualizar uma vaga cujo conteúdo mudou
+
+10.1 Criar deduplicator.py e test_deduplicator.py	✅ feito
+10.2 normalize_key_part + 5 testes	✅ feito, 5 passando, commit 23cd20e
+10.3 canonical_url + strip_tracking_params	⏳ metade: os 5 testes estão escritos e falham com ImportError (esperado); a função fica para amanhã
+
+✅ 10.3 canonical_url + strip_tracking_params
+   - removes utm_*, gclid, fbclid, msclkid; keeps meaningful params, sorted
+   - lowercases scheme/host, drops trailing slash and #fragment
+   - empty/None URL -> ""
+   - test_deduplicator.py: 9 passed; full suite 63 passed
+   - commit <hash>
+Ordem de comparação:
+
+Fonte + identificador externo
+URL canônica
+Empresa + título + localização
+Hash do conteúdo
+
+Concluído quando: executar o scraper duas vezes não duplicar as vagas.
+
+Etapa 10 — Remover duplicidades (continuação)
+
+✅ 10.3 canonical_url + strip_tracking_params
+   - removes utm_*, gclid, fbclid, msclkid; keeps meaningful params, sorted
+   - lowercases scheme/host, drops trailing slash and #fragment
+   - empty/None URL -> ""
+   - test_deduplicator.py: 9 passed; full suite 63 passed
+   - commit 5df072a
+
+✅ 10.4 source_id_key (fonte + identificador externo)
+   - devolve (source, external_id), com source em minúsculas e sem espaços
+   - external_id numérico vira string
+   - external_id ausente ou em branco -> None (cai para a próxima comparação)
+   - test_deduplicator.py: 15 passed; full suite 69 passed
+   - commit 26dff30
+
+✅ 10.5 canonical_url_key (comparação pela URL canônica)
+   - devolve canonical_url(job.source_url): ignora parâmetros de rastreamento, fragmento, barra final e caixa do host
+   - URL ausente ou em branco -> None
+   - test_deduplicator.py: 20 passed; full suite 74 passed
+   - commits 197663a (testes; função foi parar no arquivo de teste por engano) + 5556ac2 (função movida para deduplicator.py)
+
+✅ 10.6 content_key (empresa + título + cidade + estado)
+   - usa normalize_key_part: ignora maiúsculas, acentos e espaços extras
+   - empresa ou título ausente -> None
+   - localização vazia é permitida
+
+
+
+
+
+✅ 10.7 content_hash (sha256 do conteúdo)
+   - cobre título, empresa, descrição, cidade e estado, normalizados
+   - fetched_at fica de fora, então o hash não muda entre execuções
+   - hash de 64 caracteres hexadecimais
+   - test_deduplicator.py: 33 passed; full suite 87 passed
+   - commits e9e3110 + b0da3a5 (imports organizados)
+
+✅ 10.8 find_duplicate (junta as chaves)
+   - ordem: fonte + ID, URL canônica, empresa + título + local
+   - chave None é ignorada, então dado ausente nunca gera match
+   - devolve a vaga já salva que bateu, ou None se a vaga é nova
+   - test_deduplicator.py: 40 passed; full suite 94 passed
+   - commit cc9540e
+
+⏳ 10.9 merge_jobs (não duplicar e atualizar o que mudou)
+   - sem duplicata -> adiciona
+   - mesmo content_hash -> não muda nada (mantém o fetched_at antigo)
+   - content_hash diferente -> atualiza título, empresa, descrição, cidade, estado e fetched_at
+   - devolve contagens: added, updated, unchanged
+   - test_running_twice_does_not_duplicate: 3 vagas, segunda rodada com 0 adicionadas
+   - commit 1df6746
+   - PENDENTE: confirmar 47 passed / 101 passed (o último pytest que vi tinha 1 failed, 100 passed, antes da correção do teste)
+
+Etapa 10 concluída nas funções. A verificação ponta a ponta (rodar o scraper duas vezes e ver o JSON sem duplicatas) fica para a Etapa 11.
+
+Pendências:
+- content_key pode fundir vagas diferentes da mesma fonte (mesma empresa, título e cidade). Decidir na Etapa 14.
+- merge_jobs usa setattr: com NormalizedJob real (extra="forbid") pode precisar de model_copy(update=...) quando ligar ao main.py.
+
+Etapa 11 — Salvar os resultados
+
+Nesta fase, ainda não precisa de PostgreSQL.
+
+ Criar data/raw/jobs.json
+ Criar data/processed/jobs.json
+ Salvar o conteúdo original em raw
+ Salvar vagas normalizadas em processed
+ Usar UTF-8
+ Formatar o JSON para facilitar a leitura
+ Preservar as vagas anteriores
+ Atualizar vagas já existentes
+ Registrar first_seen_at
+ Registrar last_seen_at
+ Registrar fetched_at
+ Testar o arquivo JSON depois da escrita
+
+ ✅ Etapa 11
+- scraper/storage/json_store.py: escrita segura em UTF-8, JSON legível, relê o arquivo depois de gravar
+- persist_raw e persist_jobs ligados ao main.py, com validação (Valid 3 | Invalid 2)
+- first_seen_at e last_seen_at no NormalizedJob e no merge_jobs
+- corrigido: canonical_url quebrava com HttpUrl
+- tests/test_json_store.py: 18 testes; pytest: 119 passed
+- execução 1 (arquivo limpo): processed added 3
+⏳ pendente: execução 2 (esperado added 0 / unchanged 3)
+
+
+Não repetitivo (a parte que vale estudar):
+
+A escrita atômica do json_store: temporário, os.replace e releitura. É o padrão que impede um arquivo corrompido se o programa cair no meio.
+A regra “arquivo ilegível nunca é sobrescrito”. Parece detalhe, mas evita perder todos os dados por causa de um erro bobo.
+O bug do HttpUrl. Você viu um erro real, o entendeu e o corrigiu com teste. Esse é o tipo de história que se conta em entrevista.
+A prova de idempotência. Rodar duas vezes e ver unchanged: 3 mostra que o pipeline é seguro de repetir.
+O arquivo velho com vagas inválidas. Você descobriu que o dado antigo não some sozinho, uma lição prática sobre estado persistido.
+
+
+Estas são as 5 coisas para fazer na mão:
+
+Escrita atômica. Reescreva write_json_list (json_store.py). Grave em um arquivo temporário na mesma pasta, troque com os.replace e apague o temporário se falhar.
+Arquivo ilegível nunca é sobrescrito. Reescreva read_json_list (json_store.py). Um arquivo inexistente ou vazio dá []. JSON inválido, ou que não seja lista, dá StorageError.
+Bug do HttpUrl. Reescreva canonical_url e strip_tracking_params (deduplicator.py). A entrada pode ser um objeto HttpUrl, e não só str. Depois escreva o teste de regressão.
+Idempotência. Reescreva find_duplicate e merge_jobs (deduplicator.py), persist_jobs e persist_raw (json_store.py) e a ligação do main.py. Depois rode python main.py duas vezes e confira unchanged.
+Arquivo velho com vagas inválidas. Reescreva load_jobs e save_jobs (json_store.py) e os bônus do main.py: StorageError dizendo qual registro quebrou, e imprimir o motivo de cada vaga inválida.
+
+Concluído quando: fechar e executar novamente o programa não apagar ou duplicar os dados anteriores.
+
+Etapa 12 — Adicionar paginação
+ Identificar como a fonte muda de página
+ Descobrir o número máximo de páginas
+ Criar um laço de paginação
+ Coletar links página por página
+ Evitar visitar novamente a mesma página
+ Definir um limite máximo de páginas
+ Parar quando não houver novas vagas
+ Adicionar intervalo entre requisições
+ Mostrar o progresso no terminal
+
+Resultado esperado:
+
+Página 1: 10 vagas
+Página 2: 10 vagas
+Página 3: 4 vagas
+Total: 24 vagas únicas
+
+Concluído quando: o scraper coletar todas as páginas permitidas sem entrar em loop infinito.
+
+Etapa 13 — Controlar erros e requisições
+ Configurar timeout de conexão
+ Configurar timeout de leitura
+ Criar limite de requisições por domínio
+ Adicionar pausa entre requisições
+ Tratar erro 404
+ Tratar erro 403
+ Tratar erro 429
+ Tratar erros 500
+ Criar tentativas automáticas para erros temporários
+ Usar espera progressiva entre tentativas
+ Limitar o número de tentativas
+ Registrar a URL que falhou
+ Continuar coletando as outras vagas
+ Não tentar contornar CAPTCHA ou bloqueios
+
+Concluído quando: uma página com erro não derrubar toda a execução.
+
+Etapa 14 — Adicionar a segunda fonte
+ Escolher uma segunda fonte aprovada
+ Criar outro adaptador
+ Configurar os novos seletores
+ Reutilizar o mesmo cliente HTTP
+ Reutilizar o mesmo normalizador
+ Reutilizar o mesmo validador
+ Reutilizar a mesma deduplicação
+ Testar as fontes separadamente
+ Executar as duas fontes juntas
+ Confirmar que ambas produzem o mesmo formato de vaga
+
+Concluído quando: duas fontes diferentes gerarem o mesmo modelo NormalizedJob.
+
+Etapa 15 — Playwright, somente se necessário
+
+Pule esta etapa se as duas fontes funcionarem com httpx.
+
+ Confirmar que a vaga depende realmente de JavaScript
+ Instalar Playwright
+ Instalar o navegador necessário
+ Criar um coletor separado
+ Aguardar somente os elementos necessários
+ Definir timeout
+ Fechar o navegador após a coleta
+ Evitar imagens e recursos desnecessários
+ Limitar a quantidade de páginas abertas
+ Não usar Playwright para fontes estáticas
+
+Concluído quando: uma página dinâmica for coletada com timeout e consumo controlados.
+
+Etapa 16 — Criar os testes do scraper
+ Salvar um HTML de exemplo de cada fonte
+ Criar pasta tests/fixtures
+ Testar extração do título
+ Testar extração da empresa
+ Testar extração da descrição
+ Testar normalização
+ Testar URLs canônicas
+ Testar geração do hash
+ Testar duplicidade
+ Testar campo obrigatório ausente
+ Testar HTML inválido
+ Testar seletor quebrado
+ Testar timeout
+ Testar resposta 429
+ Confirmar que uma fonte quebrada não bloqueia a outra
+
+Concluído quando: alterar acidentalmente um seletor fizer um teste falhar.
+
+Etapa 17 — Criar o comando principal
+
+O main.py deverá executar o fluxo completo:
+
+Descobrir URLs
+→ Baixar páginas
+→ Extrair dados
+→ Normalizar
+→ Validar
+→ Remover duplicidades
+→ Salvar JSON
+
+Checklist:
+
+ Importar os adaptadores
+ Selecionar as fontes ativas
+ Executar a descoberta
+ Percorrer as URLs
+ Baixar cada vaga
+ Interpretar cada página
+ Normalizar os resultados
+ Validar as vagas
+ Remover duplicidades
+ Salvar os resultados
+ Mostrar um resumo final
+
+Resultado esperado:
+
+Fontes executadas: 2
+URLs descobertas: 45
+Vagas válidas: 32
+Duplicadas: 8
+Inválidas: 5
+Erros de coleta: 0
+
+Concluído quando: um único comando executar todo o scraper.
+
+Etapa 18 — Finalizar a documentação
+ Explicar o objetivo no README.md
+ Informar as fontes utilizadas
+ Explicar como instalar as dependências
+ Explicar como executar
+ Mostrar o formato da vaga
+ Explicar as regras de normalização
+ Explicar a deduplicação
+ Documentar limitações
+ Informar que somente fontes públicas e autorizadas são usadas
+ Adicionar exemplo de resultado
+ Fazer commit da versão final
+
+Concluído quando: outra pessoa conseguir instalar e executar seguindo apenas o README.
+
+Critério final do scraper completo
+ Duas fontes aprovadas
+ Uma fonte com paginação
+ Descoberta automática de URLs
+ Coleta dos detalhes das vagas
+ Formato único de dados
+ Validação de campos obrigatórios
+ Deduplicação funcionando
+ Erros tratados
+ Limite de requisições
+ Resultados salvos em JSON
+ Testes automatizados
+ Execução por um único comando
+ README completo
+
+Por enquanto, não entram: FastAPI, endpoints, autenticação, PostgreSQL, Redis, filas, NestJS, Next.js, IA, Docker, AWS e CI/CD. A primeira tarefa prática é a Etapa 0, seguida da criação da estrutura na Etapa 1.

@@ -1,0 +1,12 @@
+https://boards-api.greenhouse.io/v1/boards/figma/jobs?content=true
+
+
+Your first integration will therefore be:
+
+Figma Greenhouse API
+        ↓
+Fetch JSON with TypeScript
+        ↓
+Normalize the fields
+        ↓
+Insert/update scraped_jobs
